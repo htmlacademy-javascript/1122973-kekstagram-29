@@ -1,81 +1,76 @@
-const NUMBER_PHOTO = 25;
-const MESSAGES_COMMENT = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
-];
-const NAME_COMMENT = [
-  'Артем',
-  'Влад',
-  'Игорь',
-  'Денис',
-  'Егор',
-  'Александр',
-  'Илья',
-  'Константин',
-];
+import { name } from './modules/util';
 
-// Генератор уникальных неповторяющихся id из указанного диапазона.
-const getRandomIdInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
+console.log(name);
 
-  return Math.floor(result);
-};
+// const NUMBER_PHOTO = 25;
+// const COMMENT_COUNT = 30;
+// const AVATAR_COUNT = 6;
+// const MESSAGES_COMMENT = [
+//   'Всё отлично!',
+//   'В целом всё неплохо. Но не всё.',
+//   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+//   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+//   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+//   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+// ];
+// const NAME_COMMENT = [
+//   'Артем',
+//   'Влад',
+//   'Игорь',
+//   'Денис',
+//   'Егор',
+//   'Александр',
+//   'Илья',
+//   'Константин',
+// ];
 
-const createRandomNumberFromRangeGenerator = (min, max) => {
-  const previousValues = [];
+// // Генератор уникальных неповторяющихся id из указанного диапазона.
+// const getRandomInteger = (min, max) => {
+//   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+//   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+//   const result = Math.random() * (upper - lower + 1) + lower;
 
-  return function () {
-    let currentValue = getRandomIdInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomIdInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
+//   return Math.floor(result);
+// };
 
-// Случайное число из диапазона
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+// const getRandomArrayElement = (el) => el[getRandomInteger(0, el.length - 1)];
 
-const getRandomArrayElement = (el) => el[getRandomInteger(0, el.length - 1)];
+// const createCommentId = () => {
+//   let countId = 0;
 
-const getRandomCommentIdElement = createRandomNumberFromRangeGenerator(0, 10000);
+//   return () => {
+//     countId += 1;
+//     return countId;
+//   };
+// };
 
-// Комментарий к фотографии
-const createComment = () => ({
-  id: getRandomCommentIdElement(),
-  avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
-  name: getRandomArrayElement(NAME_COMMENT),
-  message: getRandomArrayElement(MESSAGES_COMMENT),
-});
+// const createMessage = () => Array.from(
+//   {length: getRandomInteger(1, 2)},
+//   () => getRandomArrayElement(MESSAGES_COMMENT),
+// ). join(' ');
 
-const getRandomIdElement = createRandomNumberFromRangeGenerator(1, NUMBER_PHOTO);
-const getRandomPhotoElement = createRandomNumberFromRangeGenerator(1, NUMBER_PHOTO);
+// const generateCommentId = createCommentId();
 
-// Описание фотографии
-const createDescriptionPhoto = () => ({
-  id: getRandomIdElement(),
-  url: `photos/${ getRandomPhotoElement() }.jpg`,
-  description: 'фото',
-  likes: getRandomInteger(15, 200),
+// // Комментарий к фотографии
+// const createComment = () => ({
+//   id: generateCommentId(),
+//   avatar: `img/avatar-${ getRandomInteger(1, AVATAR_COUNT) }.svg`,
+//   name: getRandomArrayElement(NAME_COMMENT),
+//   message: createMessage(),
+// });
 
-  descriptionPhoto: Array.from({length: getRandomInteger(0, 30)}, createComment),
-});
+// // Описание фотографии
+// const createDescriptionPhoto = (index) => ({
+//   id: index,
+//   url: `photos/${ index }.jpg`,
+//   description: 'фото',
+//   likes: getRandomInteger(15, 200),
 
-const descriptionsPhoto = Array.from({length: 25}, createDescriptionPhoto);
+//   descriptionPhoto: Array.from({length: getRandomInteger(0, COMMENT_COUNT)}, createComment),
+// });
 
-descriptionsPhoto();
+// const descriptionsPhoto = Array.from({length: NUMBER_PHOTO}, (_item, index) => createDescriptionPhoto(index + 1));
+
+// console.log(descriptionsPhoto);
+
+
